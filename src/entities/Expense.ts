@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from './Users';
 import { Category } from './Category';
-
+import { Account } from './Account';
 @Entity()
 export class Expense {
   @PrimaryGeneratedColumn()
@@ -19,18 +19,24 @@ export class Expense {
   @ManyToOne(() => Category, category => category.expenses)
   category?: Category;
 
+  @ManyToOne(() => Account, account => account.expenses)
+  account?: Account;
+
   constructor(
     id?:number,
     descricao?:string,
     valor?:number,
     user?:User,
-    category?:Category
+    category?:Category,
+    account?: Account
+
   ){
     this.id = id,
     this.descricao = descricao,
     this.valor = valor,
     this.user = user,
-    this.category = category
+    this.category = category,
+    this.account = account
   }
 }
 
