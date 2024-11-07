@@ -25,6 +25,14 @@ class ExpenseRepository implements ExpenseRepository {
         return expenses || undefined;
     }
 
+    async getByUser(idUser: number): Promise<ExpenseEntity[]> {
+        const expenses = await this.repository.find({
+            where: { user: { id: idUser } },
+            relations: ['user']
+        });
+        return expenses;
+    }
+
     async create(expense: Omit<ExpenseEntity, 'id'>): Promise<ExpenseEntity> {
         const newExpense= this.repository.create(expense);
         return this.repository.save(newExpense);

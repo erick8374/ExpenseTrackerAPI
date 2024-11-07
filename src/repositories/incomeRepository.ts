@@ -25,6 +25,14 @@ class IncomeRepository implements IncomeRepository {
         return incomes || undefined;
     }
 
+    async getByUser(idUser: number): Promise<IncomeEntity[]> {
+        const incomes = await this.repository.find({
+            where: { user: { id: idUser } },
+            relations: ['user']
+        });
+        return incomes;
+    }
+
     async create(income: Omit<IncomeEntity, 'id'>): Promise<IncomeEntity> {
         const newIncome = this.repository.create(income);
         return this.repository.save(newIncome);

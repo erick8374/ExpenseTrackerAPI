@@ -26,6 +26,16 @@ export class ExpenseController {
       }
   };
 
+  getByUser = async (req: Request, res: Response): Promise<void> => {
+    const expense = await this.expenseRepository.getByUser(parseInt(req.params.userId));
+    if (!expense) {
+        res.status(404).send('Expenses not found');
+    } else {
+        res.status(200).json(expense);
+    }
+}
+
+
   create = async (req: Request, res: Response) => {
     const expenseRepository: ExpenseRepository = new ExpenseRepository(AppDataSource)        
     const userRepository: UserRepository = new UserRepository(AppDataSource)

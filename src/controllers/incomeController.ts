@@ -23,6 +23,14 @@ export class IncomeController {
       }
   };
 
+  getByUser = async (req: Request, res: Response): Promise<void> => {
+    const income = await this.incomeRepository.getByUser(parseInt(req.params.userId));
+    if (!income) {
+        res.status(404).send('Expenses not found');
+    } else {
+        res.status(200).json(income);
+    }
+}
   create = async (req: Request, res: Response): Promise<void> => {
       const newIncome = await this.incomeRepository.create(req.body);
       res.status(201).json({message: "Income added"});

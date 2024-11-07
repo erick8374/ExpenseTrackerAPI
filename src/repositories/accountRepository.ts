@@ -24,7 +24,13 @@ class AccountRepository implements AccountRepository {
         })
         return accounts || undefined;
     }
-
+    async getByUser(idUser: number): Promise<AccountEntity[]> {
+        const accounts = await this.repository.find({
+            where: { user: { id: idUser } },
+            relations: ['user'] 
+        });
+        return accounts;
+    }
     async create(account: Omit<AccountEntity, 'id'>): Promise<AccountEntity> {
         const newAccount = this.repository.create(account);
         return this.repository.save(newAccount);

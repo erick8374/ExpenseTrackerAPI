@@ -23,6 +23,16 @@ export class AccountController {
       }
   };
 
+  getByUser = async (req: Request, res: Response): Promise<void> => {
+      const account = await this.accountRepository.getByUser(parseInt(req.params.userId));
+      if (!account) {
+          res.status(404).send('Accounts not found');
+      } else {
+          res.status(200).json(account);
+      }
+  }
+
+
   create = async (req: Request, res: Response): Promise<void> => {
       const newAccount = await this.accountRepository.create(req.body);
       res.status(201).json({message: "Account added"});
