@@ -8,10 +8,10 @@ export class Expense {
   id?: number;
 
   @Column()
-  descricao?: string;
+  description?: string;
 
   @Column('decimal')
-  valor?: number;
+  value?: number;
 
   @ManyToOne(() => User, user => user.expenses)
   user?: User;
@@ -22,21 +22,26 @@ export class Expense {
   @ManyToOne(() => Account, account => account.expenses)
   account?: Account;
 
+  @Column('date')
+  date?: Date;
+
   constructor(
     id?:number,
-    descricao?:string,
-    valor?:number,
+    description?:string,
+    value?:number,
     user?:User,
     category?:Category,
-    account?: Account
+    account?: Account,
+    date?: Date
 
   ){
     this.id = id,
-    this.descricao = descricao,
-    this.valor = valor,
+    this.description = description,
+    this.value = value,
     this.user = user,
     this.category = category,
     this.account = account
+    this.date = date
   }
 }
 

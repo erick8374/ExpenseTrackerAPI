@@ -9,7 +9,7 @@ router.get('/incomes', incomeController.getAll) //adcionar um parametro query qu
 router.get('/income/:id', incomeController.getById)
 router.get('/income/user/:userId', incomeController.getByUser)
 // router.get('/income/account/:accountID', incomeController.getByAccount)
-router.put('/income/:id', incomeController.update) //não está funcionando
+router.put('/income/:id', incomeController.update) 
 router.delete('/income/:id', incomeController.delete)
 
 export default router

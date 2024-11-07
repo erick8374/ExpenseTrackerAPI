@@ -55,10 +55,11 @@ export class ExpenseController {
     }
 
     const expense = new Expense()
-    expense.descricao = req.body.descricao,
-    expense.valor = req.body.valor,
+    expense.description = req.body.description,
+    expense.value = req.body.value,
     expense.user = user,
-    expense.category = category
+    expense.category = category,
+    expense.date = req.body.date
 
     const newExpense = this.expenseRepository.create(expense)
     res.status(201).json(newExpense);
