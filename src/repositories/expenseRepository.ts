@@ -8,10 +8,12 @@ class ExpenseRepository implements ExpenseRepository {
         this.repository = dataSource.getRepository(ExpenseEntity)
     }
 
-    async getAll(): Promise<ExpenseEntity[]> {
-        return this.repository.find()
-    }
 
+    async getAll(): Promise<ExpenseEntity[]> {
+        return this.repository.find({
+            relations: ['user', 'category'], // Carregar as relações necessárias
+        });
+    }
     async getById(id: number): Promise<ExpenseEntity | undefined> {
         const expense = await this.repository.findOneBy({ id })
         return expense || undefined
@@ -32,7 +34,13 @@ class ExpenseRepository implements ExpenseRepository {
         });
         return expenses;
     }
-
+    async getByCategory(idCategory: number): Promise<ExpenseEntity[]> {
+        const expenses = await this.repository.find({
+            where: { category: { id: idCategory } },
+            relations: ['category']
+        });
+        return expenses;
+    }
     async create(expense: Omit<ExpenseEntity, 'id'>): Promise<ExpenseEntity> {
         const newExpense= this.repository.create(expense);
         return this.repository.save(newExpense);

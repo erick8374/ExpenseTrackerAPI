@@ -34,7 +34,14 @@ export class ExpenseController {
         res.status(200).json(expense);
     }
 }
-
+    getByCategory = async (req: Request, res: Response): Promise<void> => {
+        const expense = await this.expenseRepository.getByCategory(parseInt(req.params.categoryId));
+        if (!expense) {
+            res.status(404).send('Expenses not found');
+        } else {
+            res.status(200).json(expense);
+        }
+    }
 
   create = async (req: Request, res: Response) => {
     const expenseRepository: ExpenseRepository = new ExpenseRepository(AppDataSource)        

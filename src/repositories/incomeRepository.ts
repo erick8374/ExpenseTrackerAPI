@@ -9,7 +9,9 @@ class IncomeRepository implements IncomeRepository {
     }
 
     async getAll(): Promise<IncomeEntity[]> {
-        return this.repository.find()
+        return this.repository.find({
+            relations: ['user', 'account'], // Carregar as relações necessárias
+        });
     }
 
     async getById(id: number): Promise<IncomeEntity | undefined> {
